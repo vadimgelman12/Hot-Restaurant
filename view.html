@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Restaurant Reservation</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Restaurant Reservation</h1>
+        <h3>Check Your Reservation</h3>
+        <hr>
+        <a href="/"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-eye-open"></span> Make Reservation</button></a>
+        <a href="/"><button type="button" class="btn btn-lg"><span class="glyphicon glyphicon glyphicon-home"></span></button></a>
+        
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Current Reservation</strong></h3>
+            </div>
+            <div class="panel-body">
+              <div class="well" id="reservation-div">
+                <h2 id="user_ID"></h2>
+                
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><strong>Wait List</strong></h3>
+            </div>
+            <div class="panel-body">
+              <div class="well" id="waitlist-div">
+                <h2 id=""></h2>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script type="text/javascript">
+    // $("#search-btn").on("click", function() {
+      // var newReservation = $("#newReservation").val().trim();
+
+      // Using a RegEx Pattern to remove spaces from searchedCharacter
+      // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+      // var reservation = searchedReservations.replace(/\s+/g, "").toLowerCase();
+
+      $.get("/api/tables", function(data) {
+        console.log(data);
+        if (data) {
+         
+
+          for (var i = 0; i < data.length; i++) {
+            var newSpan = $("<span>");
+            var newH2 = $("<h2>");
+            var newNumber = $('<span class="label label-primary">' + (i + 1) + '</span>')
+            newSpan.text(`    `);
+            newH2.append(newNumber);
+            newH2.append(newSpan);
+            newH2.append(data[i].id);
+            // $(".well").append(newNumber);
+            $("#reservation-div").append(newH2);
+          }
+            
+        }
+      });
+
+      $.get("/api/waitlist", function(data) {
+        console.log(data);
+        console.log(` data[2]: ${data[2]}`);
+        if (data) {
+         // console.log(data[0])
+
+           for (var i = 0; i < data.length; i++) {
+            var newSpan = $("<span>");
+            var newH2 = $("<h2>");
+            var newNumber = $('<span class="label label-primary">' + (i + 1) + '</span>')
+            newSpan.text(`    `);
+            newH2.append(newNumber);
+            newH2.append(newSpan);
+            newH2.append(data[i].id);
+            $("#waitlist-div").append(newH2);
+          }
+            
+            
+        }
+        
+      });
+    // });
+  </script>
+
+</body>
